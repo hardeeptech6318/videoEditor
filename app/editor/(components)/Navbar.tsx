@@ -1,68 +1,78 @@
+"use client"
+
 import { Archive, Blend, Music, PlusSquare, Search, Settings, StickyNote, Text, Video } from "lucide-react";
 import Link from "next/link";
 import PopoverMenu from "./PopoverMenu";
 import SearchModal from "./SearchModal";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 
 const options=[
-    {
-    title:'Search',
-    Icon:Search,
-    url:'search'
-},
+//     {
+//     title:'Search',
+//     Icon:Search,
+//     url:'search'
+// },
 {
     title:'Settings',
     Icon:Settings,
-    url:'settings'
+    url:'/editor/settings'
 },
 {
     title:'Media',
     Icon:PlusSquare,
-    url:'media'
+    url:'/editor/media'
 },
 {
     title:'Audio',
     Icon:Music,
-    url:'audio'
+    url:'/editor/audio'
 },
 {
     title:'Subtitles',
     Icon:Archive,
-    url:'subtitle'
+    url:'/editor/subtitle'
 },
 {
     title:'Text',
     Icon:Text,
-    url:'text'
+    url:'/editor/text'
 },
 {
     title:'Elements',
     Icon:StickyNote,
-    url:'element'
+    url:'/editor/element'
 },
 {
     title:'Record',
     Icon:Video,
-    url:'record'
+    url:'/editor/record'
 },
 {
     title:'Filters',
     Icon:Blend,
-    url:'filter'
+    url:'/editor/filter'
 }
 ]
 
 const Navbar = () => {
+    const router=usePathname()
+    
+    
   return (
-    <nav  className=" ">
+    <ScrollArea>
+    <nav  >
         <div className="flex flex-col gap-8 p-5 h-full overflow-x-hidden overflow-y-auto flex-shrink-0 ">
             <PopoverMenu/>
             <SearchModal/>
         {options.map((e,i)=>(
-            <Link className=" flex justify-center items-center flex-col gap-2" key={i} href={e.url}><e.Icon height={20}  width={20} className=" bg-[#e1e1e3]  rounded-sm  text-white"/><span className=" text-muted-foreground text-sm">{e.title}</span></Link>
+            <Link className={cn(" flex justify-center items-center  flex-col gap-2 ",)} key={i} href={e.url}><e.Icon height={40}  width={40} className={cn(" p-2 bg-[#e1e1e3]  rounded-full   text-white",router===e.url && 'bg-[#0098fd]')}/><span className=" text-muted-foreground text-sm">{e.title}</span></Link>
         ))}
         </div>
     </nav>
+    </ScrollArea>
   );
 }
 

@@ -48,7 +48,7 @@ export default function SearchModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline"><Search/></Button>
+        <Button variant="ghost"><Search/></Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

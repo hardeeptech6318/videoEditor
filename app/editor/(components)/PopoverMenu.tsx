@@ -21,7 +21,7 @@ export default function PopoverMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button  variant="outline"><Menu/></Button>
+        <Button variant="ghost"><Menu/></Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Veed.io</DropdownMenuLabel>

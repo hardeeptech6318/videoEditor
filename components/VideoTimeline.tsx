@@ -1,53 +1,40 @@
-import React, { useRef, useEffect } from 'react';
+import React from "react";
 
-interface Props {
-  duration: number;
-  currentTime: number;
-}
-
-const Timeline: React.FC<Props> = ({ duration, currentTime }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const frameInterval = 1; // Interval in seconds to draw frames
-  const canvasWidth = 10; // Width of the canvas
-  const canvasHeight = 50; // Height of the canvas
-  const framesPerSecond = 24; // Number of frames per second in the video
-
-  useEffect(() => {
-    if (!canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-
-    if (!context) return;
-
-    // Clear canvas
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
-
-    // Draw frames
-    const totalFrames = Math.floor((duration / 1000) * framesPerSecond);
-    const frameWidth = canvasWidth / totalFrames;
-    const currentFrame = Math.floor((currentTime / 1000) * framesPerSecond);
-
-    for (let i = 0; i < totalFrames; i++) {
-      const x = i * frameWidth;
-      context.fillStyle = i <= currentFrame ? 'rgba(0, 0, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)';
-      context.fillRect(x, 0, frameWidth, canvasHeight);
-
-      // Draw time labels
-      if (i % (framesPerSecond * 5) === 0) {
-        const time = (i / framesPerSecond).toFixed(2);
-        context.fillStyle = 'black';
-        context.fillText(time, x + 2, 10);
-      }
-    }
-  }, [duration, currentTime]);
-
+function VideoTimeline() {
   return (
-    <div className="relative">
-      {/* Timeline track */}
-      <canvas ref={canvasRef}  height={canvasHeight} style={{ width: '100%', height: '100%' }} />
+    <div className="Timelinestyled__OuterContainer-sc-14uduoa-1 knteOg">
+      <div
+        id="dropWrapper-timeline"
+        className="DropWrapperstyled__Wrapper-sc-1x3a1rn-0 eDjKsP"
+      >
+        <div
+          data-testid="@timeline/container"
+          className="Timelinestyled__Relative-sc-14uduoa-4 hjrnKq"
+        >
+          <button
+            data-testid="@editor/timeline/add-media-button"
+            // height="54px"
+            className="Timelinestyled__Button-sc-14uduoa-2 czBAGq h-[54px]"
+            style={{top: "30px" ,height: "54px"}}
+          >
+            <span className="Timelinestyled__Plus-sc-14uduoa-3 jAsSvH">＋</span>{" "}
+            Add media to this project
+          </button>
+          <canvas
+            width="1815"
+            height="115"
+            style={{height: "92px", zIndex: 1, touchAction: "none", width: "1452px", cursor: "pointer"}}
+          ></canvas>
+        </div>
+        <canvas
+          width="1815"
+          height="115"
+          className="Timelinestyled__OverlayCanvasStyled-sc-14uduoa-0 jNDqYD"
+          style={{height: "92px", width: "1452px"}}
+        ></canvas>
+      </div>
     </div>
   );
-};
+}
 
-export default Timeline;
+export default VideoTimeline;

@@ -18,21 +18,21 @@ function Layout({ children }: { children: React.ReactNode }) {
       <Navbar />
       
       <ResizablePanelGroup direction="vertical" >
-      <ResizablePanel defaultValue={25}>
-      <div className=" flex-1 flex h-full">
-          <ScrollArea className=" w-[400px] overflow-y-auto p-5 border-r shadow-sm ">
+      <ResizablePanel className="  flex h-full" defaultValue={25}>
+      
+          <ScrollArea className=" w-[400px] h-full  p-5 border-r shadow-sm ">
             {children}
           </ScrollArea>
 
-          <Maineditor className=" flex-1 bg-[#f7f7f8] " />
-        </div>
+          <Maineditor className=" flex-1 h-full bg-[#f7f7f8] " />
+        
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel>
-      <div className="  shadow-sm border flex flex-col">
+      <ResizablePanel className="shadow-sm border flex flex-col">
+      
           <VideoControls />
-          <Timeline duration={1500} currentTime={100} />
-        </div>
+          <Timeline  />
+        
       </ResizablePanel>
     </ResizablePanelGroup>
 
