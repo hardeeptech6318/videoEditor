@@ -17,9 +17,9 @@ function Maineditor({className}:{className:string}) {
     
   }, [playerRef, setVideoRef, videoFile]);
   return (
-    <div className={cn("p-3 flex flex-col",className)}>
+    <div className={cn("p-3 flex flex-col h-full",className)}>
       <EditorNavbar/>
-      <div className=" flex-1">
+      <div className=" flex-1 flex justify-center items-center p-10 lg:p-20 h-full">
       {videoFile && (
         <video controls ref={playerRef} >
           <source src={URL.createObjectURL(videoFile)} type="video/mp4" />

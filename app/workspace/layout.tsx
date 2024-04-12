@@ -4,6 +4,8 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Header from "./(components)/Header";
 import Navbar from "./(components)/Navbar";
+import LinkComponent from "./(components)/LinkComponent";
+import MobileNav from "./(components)/MobileNav";
 // import "@/externaljsfile/main.550ac09d"
 // import "@/externaljsfile/336.d8b87783.chunk"
 // import "@/externaljsfile/614.b5584f3f.chunk"
@@ -23,9 +25,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-   <div className=" flex fixed h-full w-full">
+   <div className=" flex  fixed h-full w-full">
     <ScrollArea>
+    <MobileNav/>
+    <div className=" hidden md:block">
     <Navbar/>
+    </div>
+    
     </ScrollArea>
     <div className=" flex-1 bg-[#f7f7f8]   ">
         <Header/>

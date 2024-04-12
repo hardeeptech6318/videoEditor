@@ -72,22 +72,22 @@ function VideoControls() {
 
 
     <div className=' flex  justify-between my-3 items-center'>
-        <div>
-            <Button className=' text-xs' variant="ghost"><Scissors width={15} height={15} className=' mr-2'/> Split</Button>
-            <Button className=' text-xs' variant="ghost"><Download width={15} height={15} className=' mr-2'/>Download section</Button>
+        <div className=' flex'>
+            <Button className=' hidden lg:flex mr-2 text-xs' variant="ghost"><Scissors width={15} height={15} className=' mr-2'/><span> Split</span></Button>
+            <Button className=' text-xs' variant="ghost"><Download width={15} height={15} className=' mr-2'/> <span className='hidden lg:block mr-2'>Download section</span></Button>
         </div>
         <div className=' flex  items-center'>
-            <Button variant="ghost" onClick={handleRewind}><Rewind/></Button>
-            <Button variant="ghost" onClick={handlePlayPause}>{!isPlaying ?<Play/>:<PauseCircle/>}</Button> {/* change hanle play and puse based on is video playing or pause */}
-            <Button variant="ghost" onClick={handleFastForward}><FastForward/></Button>
+            <Button className=' rounded-full' variant="ghost" onClick={handleRewind}><Rewind width={20} height={20} fill="#000000"/></Button>
+            <Button className=' rounded-full' variant="ghost" onClick={handlePlayPause}>{!isPlaying ?<Play fill="#000000"/>:<PauseCircle/>}</Button> {/* change hanle play and puse based on is video playing or pause */}
+            <Button className=' rounded-full' variant="ghost" onClick={handleFastForward}><FastForward width={20} height={20} fill="#000000"/></Button>
             
-            <div>{ formatDuration(currentTime) }/{formatDuration(videoRef?.current?.duration) }</div>
+            <div className='hidden lg:block'>{ formatDuration(currentTime) }/{formatDuration(videoRef?.current?.duration) }</div>
         </div>
 
         <div > 
-<div className=' flex items-center gap-2'><ZoomIn/><Slider className=' min-w-[100px]' defaultValue={[33]} max={100} step={1} /><ZoomOut/>
-<Button className=' text-xs border-r' variant="ghost">Fit</Button>
-<Settings className=' mx-3 ' width={35} height={35}/>
+<div className=' flex items-center gap-2'><ZoomIn className='w-5 h-5 lg:w-10 lg:h-10'/><Slider className='hidden lg:flex min-w-[100px]' defaultValue={[33]} max={100} step={1} /><ZoomOut className='w-5 h-5 lg:w-10 lg:h-10'/>
+<Button className='hidden lg:block text-xs border-r' variant="ghost">Fit</Button>
+<Settings className=' mx-3 w-5 h-5 lg:w-10 lg:h-10 ' width={35} height={35}/>
 </div>
         </div>
         

@@ -7,13 +7,15 @@ import SoundEffect from '@/components/SoundEffect'
 
 function page() {
   return (
-    <div>
+    <section>
         <Optiontitle title='Media'/>
         <Upload/>
+        
         <StockVideos/>
+        
         <Stockmusic/>
         <SoundEffect/>
-    </div>
+    </section>
   )
 }
 

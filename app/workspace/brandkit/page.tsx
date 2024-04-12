@@ -17,16 +17,16 @@ function page() {
   return (
     <section  className=' p-10'>
 
-        <div className=' opacity-80 grid grid-cols-12 bg-gradient-to-r from-red-500 to-orange-500 gap-5 p-5 rounded-2xl'>
+        <div className=' opacity-80 flex flex-col items-center  md:flex-row bg-gradient-to-r from-red-500 to-orange-500 gap-5 p-5 rounded-2xl'>
 
-          <div className=' col-span-4'>
+          <div >
               <ImageSection/>
           </div>
-          <div className=' col-span-8'>
-              <h1 className=' text-5xl  font-bold text-white'>Keep your videos on brand with Brand  Kit.</h1>
-              <div className=' flex justify-between items-center mt-3 '>
-                <p className=' text-white'>Create a unified look for your video content. <br/>Set your brand's fonts, color schemes, and logo,<br/>and apply them to all your videos.</p>
-                <Button size="lg" variant="outline" className=' p-6 rounded-2xl flex gap-5 justify-between items-center'>
+          <div className='flex-1'>
+              <h1 className='lg:text-3xl md:text-2xl text-xl   xl:text-5xl  font-bold text-white'>Keep your videos on brand with Brand  Kit.</h1>
+              <div className=' flex justify-between items-center  xl:mt-3 xl:flex-row flex-col '>
+                <p className=' my-2 md:my-4 xl:my-5 text-white'>Create a unified look for your video content. <br/>Set your brand&apos;s fonts, color schemes, and logo,<br/>and apply them to all your videos.</p>
+                <Button size="lg" variant="outline" className=' p-6 rounded-2xl   flex gap-5 justify-between items-center'>
                     <span>Upgrade to Build Your Brand Kit</span>
                     <ArrowRight/> 
                 </Button>
@@ -44,7 +44,7 @@ function page() {
           Image Assests
         </AccordionTrigger>
         <p className='text-sm text-muted-foreground'>Add brand images and custom watermarks and use them across your projects</p>
-        <AccordionContent className=' grid grid-cols-5 gap-5 mt-5'>
+        <AccordionContent className=' grid xl:grid-cols-5  md:grid-cols-3 grid-cols-2  gap-5 mt-5'>
           
           <UploadFile Icon={<ImageIcon/>} text='Add Image' className=' col-span-1  '/>
 
@@ -64,7 +64,7 @@ function page() {
         
         </AccordionTrigger>
         <p>Add brand videos and custom clips and use them across your projects</p>
-        <AccordionContent className=' grid grid-cols-5 gap-5 mt-5'>
+        <AccordionContent className=' grid xl:grid-cols-5  md:grid-cols-3 grid-cols-2  gap-5 mt-5'>
         <UploadFile Icon={<Video/>} text='Add Video' className=' col-span-1  '/>
 
 <Card className='  flex flex-col'>
@@ -83,7 +83,7 @@ function page() {
           
           </AccordionTrigger>
           <p>Add custom audio and use them for subtitles and captions in any video</p>
-        <AccordionContent className=' grid grid-cols-5 gap-5 mt-5'>
+        <AccordionContent className=' grid xl:grid-cols-5  md:grid-cols-3 grid-cols-2  gap-5 mt-5'>
         <UploadFile Icon={<AudioLinesIcon/>} text='Add Audio' className=' col-span-1  '/>
 
 {/* <Card className='  flex flex-col'>
@@ -101,7 +101,7 @@ function page() {
           
           </AccordionTrigger>
           <p>Add brand images and custom watermarks and use them across your projects</p>
-        <AccordionContent className=' grid grid-cols-5 gap-5 mt-5'  >
+        <AccordionContent className=' grid xl:grid-cols-5  md:grid-cols-3 grid-cols-2  gap-5 mt-5'  >
         <UploadFile Icon={<Plus/>} text='Add Colors' className=' col-span-1  '/>
 
         <Card className='  flex flex-col'>
@@ -128,7 +128,7 @@ function page() {
           
           </AccordionTrigger>
           <p>Add custom fonts and use them for subtitles and captions in any video</p>
-        <AccordionContent className=' grid grid-cols-5 gap-5 mt-5'>
+        <AccordionContent className=' grid xl:grid-cols-5  md:grid-cols-3 grid-cols-2  gap-5 mt-5'>
         <UploadFile Icon={<Type/>} text='Add Font' className=' col-span-1  '/>
 
 <Card className='  flex flex-col min-h-[110px]'>

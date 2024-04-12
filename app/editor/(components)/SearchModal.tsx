@@ -48,7 +48,10 @@ export default function SearchModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost"><Search/></Button>
+        <Button variant="ghost" className=" hover:bg-white flex-col gap-2 h-full w-full">
+          <div className=" p-2 rounded-full hover:bg-gray-300"><Search height={25} width={25} className=" text-white rounded-md bg-[#e1e1e3] p-1" /></div>
+          <div><span>Search</span></div>
+          </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

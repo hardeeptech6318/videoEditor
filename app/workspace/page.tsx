@@ -1,4 +1,4 @@
-"use client"
+
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -86,9 +86,9 @@ function page() {
   return (
     <section className="p-5">
       <h1 className=" text-2xl py-5">
-        Let's create some <span className=" font-bold">videos!</span>
+        Let&apos;s create some <span className=" font-bold">videos!</span>
       </h1>
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {cardsData.map((e) => (
           <Link
             href={e.url}
@@ -118,7 +118,7 @@ function page() {
       </div>
 
       <div className=" grid grid-cols-12 gap-5   ">
-        <Card className="flex flex-col rounded-2xl p-5 col-span-4  ">
+        <Card className="flex flex-col rounded-2xl p-5 col-span-12 lg:col-span-5 xl:col-span-4  ">
 
           <video  className=" rounded-xl w-full"    src="https://cdn.veed.io/render/c0b2c1e0-dd8e-4c8d-80b3-2ce9ba51eafc.mp4">
 
@@ -136,7 +136,7 @@ function page() {
 
         </Card>
 
-        <Card className=" rounded-2xl col-span-8 grid grid-cols-12  ">
+        <Card className=" rounded-2xl lg:col-span-7 col-span-12 xl:col-span-8 grid grid-cols-12  ">
             <div className=" col-span-5 flex justify-center items-start flex-col gap-2 ml-10 m-5"> 
               <h2 className=" text-2xl font-semibold">Select a template to get started!</h2>
               <p>Browse our collection of free customizable templates and start editing your video</p>

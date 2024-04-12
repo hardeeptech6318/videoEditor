@@ -19,9 +19,9 @@ import {
 } from "@/components/ui/popover"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Label } from "@/components/ui/label"
+
 import UploadComponent from "@/components/UploadComponent"
-import { Input } from "@/components/ui/input"
+
 import ColorPicker from "@/components/Colorpicker"
 
 
@@ -124,71 +124,18 @@ const frameworks = [
 // ]
 
 export default function MainPopoverRatio({className}:{className?:string}) {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  
   const [color, setcolor] = React.useState("#580e0e")
 
 
-  React.useEffect(()=>{
-console.log(color);
+  const [open, setOpen] = React.useState(false)
 
-  },[color])
-
-  const slectedLabel=frameworks?.find((k) => k.value.toLocaleLowerCase() === value)
+  
 
   return (
     <div className={cn("flex justify-center items-center",className)}>
     <div className=" rounded-xl bg-white shadow-sm border w-fit">
-    <Popover open={open} onOpenChange={setOpen} >
-      <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[200px] justify-between border-r"
-        >
-          {value
-            ? ( <span className=" flex items-center gap-3">{slectedLabel?.svg}{slectedLabel?.label}</span>)
-            : "Select Aspect ratio..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder="Search framework..." />
-          <ScrollArea className="h-72  rounded-md border">
-          <CommandEmpty>No framework found.</CommandEmpty>
-          <CommandGroup>
-          
-            {frameworks.map((framework,i) => (
-              <CommandItem
-                key={i}
-                value={framework.value}
-                onSelect={(currentValue) => {
-                  
-                  
-                  setValue(currentValue === value ? "" : currentValue)
-                  setOpen(false)
-                }}
-                className="flex items-center gap-2 justify-between py-3"
-              >
-                <span className=" flex gap-2">
-                <span>{framework.svg}</span><span>{framework.label}</span>
-                </span>
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === framework.value.toLocaleLowerCase() ? "opacity-100" : "opacity-0"
-                  )}
-                />
-              </CommandItem>
-            ))}
-          </CommandGroup>
-          </ScrollArea>
-        </Command>
-      </PopoverContent>
-    </Popover>
-
+      <RatioCompoent/>
       
       <Popover>
       <PopoverTrigger asChild>
@@ -225,5 +172,63 @@ console.log(color);
 
     </div>
     </div>
+  )
+}
+
+
+export const RatioCompoent=({className}:{className?:string})=>{
+  const [open, setOpen] = React.useState(false)
+  const [value, setValue] = React.useState("")
+  const slectedLabel=frameworks?.find((k) => k.value.toLocaleLowerCase() === value)
+  return (
+    <Popover open={open} onOpenChange={setOpen}  >
+    <PopoverTrigger asChild>
+      <Button
+        variant="ghost"
+        role="combobox"
+        aria-expanded={open}
+        className={cn("w-[200px] justify-between border-r",className)}
+      >
+        {value
+          ? ( <span className=" flex items-center gap-3">{slectedLabel?.svg}{slectedLabel?.label}</span>)
+          : "Select Aspect ratio..."}
+        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+      </Button>
+    </PopoverTrigger>
+    <PopoverContent className={cn("w-[200px] p-0",className)}>
+      <Command>
+        <CommandInput placeholder="Search framework..." />
+        <ScrollArea className="h-72  rounded-md border">
+        <CommandEmpty>No framework found.</CommandEmpty>
+        <CommandGroup>
+        
+          {frameworks.map((framework,i) => (
+            <CommandItem
+              key={i}
+              value={framework.value}
+              onSelect={(currentValue) => {
+                
+                
+                setValue(currentValue === value ? "" : currentValue)
+                setOpen(false)
+              }}
+              className="flex items-center gap-2 justify-between py-3"
+            >
+              <span className=" flex gap-2">
+              <span>{framework.svg}</span><span>{framework.label}</span>
+              </span>
+              <Check
+                className={cn(
+                  "mr-2 h-4 w-4",
+                  value === framework.value.toLocaleLowerCase() ? "opacity-100" : "opacity-0"
+                )}
+              />
+            </CommandItem>
+          ))}
+        </CommandGroup>
+        </ScrollArea>
+      </Command>
+    </PopoverContent>
+  </Popover>
   )
 }

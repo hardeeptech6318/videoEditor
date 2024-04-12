@@ -16,15 +16,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Menu } from "lucide-react"
+import Link from "next/link"
 
 export default function PopoverMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost"><Menu/></Button>
+        <Button variant="ghost"><Menu width={20} height={20}/></Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Veed.io</DropdownMenuLabel>
+        <DropdownMenuLabel><Link href="/workspace">Veed.io</Link></DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
@@ -55,9 +56,9 @@ export default function PopoverMenu() {
           </DropdownMenuSub>
         
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
         
-        <DropdownMenuSeparator />
+        
+        
        
       </DropdownMenuContent>
     </DropdownMenu>

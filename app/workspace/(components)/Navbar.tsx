@@ -6,7 +6,7 @@ import LinkComponent from './LinkComponent'
 
 function Navbar() {
   return (
-    <nav  className=' px-5 shadow-sm'>
+    <nav  className=' px-5 shadow-sm  '>
         <div className=' text-3xl font-bold p-3'>VEED.IO</div>  
         <div>
             <UserProfileMenu/>
