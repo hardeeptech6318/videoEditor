@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { FFmpeg  } from "@ffmpeg/ffmpeg";
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+
 
 interface VideoTimelineProps {
   duration: number;
@@ -11,54 +12,66 @@ interface VideoTimelineProps {
 
 const VideoTimeline: React.FC<VideoTimelineProps> = ({ duration }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [videoWidth, setVideoWidth] = useState(0);
-  const [loaded, setLoaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+//   const [currentTime, setCurrentTime] = useState(0);
+//   const [videoWidth, setVideoWidth] = useState(0);
+//   const [loaded, setLoaded] = useState(false);
+//   const [isLoading, setIsLoading] = useState(false);
   const [frames, setFrames] = useState<Blob[]>([]);
   const ffmpegRef = useRef(new FFmpeg());
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const messageRef = useRef<HTMLParagraphElement | null>(null);
+//   const videoRef = useRef<HTMLVideoElement | null>(null);
+//   const messageRef = useRef<HTMLParagraphElement | null>(null);
 
   const load = async () => {
     const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd'
     const ffmpeg = ffmpegRef.current;
-    ffmpeg.on('log', ({ message }) => {
-        // messageRef.current.innerHTML = message;
-        console.log(message);
-    });
-    // toBlobURL is used to bypass CORS issue, urls with the same
-    // domain can be used directly.
+    // ffmpeg.on('log', ({ message }) => {
+    //     console.log(message);
+    // });
+    
     await ffmpeg.load({
         coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
         wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
     });
-    setLoaded(true);
+    // setLoaded(true);
 }
+
+
+
+
+
+
   const convertVideoToFrames = async () => {
+    await load()
     const ffmpeg = ffmpegRef.current;
+        const file = fileInputRef.current?.files?.[0];
+        
 
     await ffmpeg.writeFile(
       "input.mp4",
-      await fetchFile(
-        "https://dm0qx8t0i9gc9.cloudfront.net/previews/video/GTYSdDW/4k-60fps-aerial-of-woman-walking-in-jasper-national-park_h9o_sj4c__8b074e483fb25df4417f23020ccb91d3__P720.mp4"
-      )
+      await fetchFile(file)
+    
     );
 
-    await ffmpeg.exec(["-i", "input.mp4", "-vf", "fps=1", "frame%03d.png"]);
+    await ffmpeg.exec(["-i", "input.mp4", "-vf", "fps=1/30", "frame%03d.png"]);
 
     const framelist=[]
 
-    for (let i = 1; i <= 2; i++) {
-        
-        
-        const data = await ffmpeg.readFile( `frame${String(i).padStart(3, '0')}.png`);
+    for (let i = 1; i <= 2000; i++) {
+
+        try {
+            
+        const data:any = await ffmpeg.readFile( `frame${String(i).padStart(3, '0')}.png`);
         const blob = new Blob([data?.buffer], { type: 'image/png' });
         framelist.push(blob)
-        // console.log(blob);
+        
         
 
-        
+    } catch (error) {
+            console.log(error);
+            break;
+            
+    }
         
         
         
@@ -70,6 +83,13 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ duration }) => {
     
 
   };
+
+
+
+
+
+
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -96,7 +116,16 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ duration }) => {
       context.fillRect(xPos, height - 10, 1, 10);
       context.fillText(formatTime(i), xPos - 10, height - 20);
     }
-  }, [currentTime, duration, videoWidth]);
+
+    frames.forEach((frame, index) => {
+        const image = new Image();
+        image.src = URL.createObjectURL(frame);
+        image.onload = () => {
+          const xPos = (index + 1) * 100; // Adjust the position of the frame on the canvas
+          context.drawImage(image, xPos, 0, 100, 100); // Draw the frame on the canvas
+        };
+      });
+  }, [frames]);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -110,47 +139,23 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ duration }) => {
     <div>
       <canvas
         ref={canvasRef}
-        width={500}
-        height={100}
+        width={1000}
+        height={150}
         style={{ border: "1px solid black" }}
       />
-      <input
-        type="range"
-        min={0}
-        max={duration}
-        value={currentTime}
-        onChange={(e) => setCurrentTime(Number(e.target.value))}
+        <input
+        ref={fileInputRef}
+        type="file"
+        accept="video/*"
+        onChange={async(e) => {
+          const file = e.target.files?.[0];
+          if (file) {
+            // console.log("Selected file:", file.name);
+            await convertVideoToFrames()
+          }
+        }}
       />
-
-      {/* {frames.map((e,i)=>(
-        <Image key={i} src={e} alt="khg" height={200} width={200}/>
-      ))} */}
-
-
-      {loaded ? (
-        <>
-          <video
-            ref={videoRef}
-            src="https://dm0qx8t0i9gc9.cloudfront.net/previews/video/GTYSdDW/4k-60fps-aerial-of-woman-walking-in-jasper-national-park_h9o_sj4c__8b074e483fb25df4417f23020ccb91d3__P720.mp4"
-            onLoadedMetadata={(e) => setVideoWidth(e.currentTarget.videoWidth)}
-            controls
-          />
-          <button onClick={convertVideoToFrames}>
-            Convert Video to Frames
-          </button>
-          {isLoading && <p>Loading...</p>}
-          <p ref={messageRef}></p>
-          {frames.map((frame, index) => (
-            <img
-              key={index}
-              src={URL.createObjectURL(frame)}
-              alt={`Frame ${index}`}
-            />
-          ))}
-        </>
-      ) : (
-        <button onClick={load}>Load FFmpeg</button>
-      )}
+      
     </div>
   );
 };
