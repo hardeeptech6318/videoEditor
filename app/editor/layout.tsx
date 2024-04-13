@@ -23,6 +23,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import useVideoStore from "@/zustandStore/store";
+import CanvasVideoTimeline from "@/components/CanvasTimeline";
 
 
 function Layout({ children }: { children: React.ReactNode }) {
@@ -54,8 +55,8 @@ function Layout({ children }: { children: React.ReactNode }) {
       <ResizablePanel className="shadow-sm border flex flex-col">
       
           <VideoControls />
-          <Timeline  />
-        
+          {/* <Timeline  /> */}
+          <CanvasVideoTimeline/>
       </ResizablePanel>
     </ResizablePanelGroup>
 
