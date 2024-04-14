@@ -57,8 +57,9 @@ function Layout({ children }: { children: React.ReactNode }) {
       
           <VideoControls />
           {/* <Timeline  /> */}
-          <NoSSRWrapper></NoSSRWrapper>
+          <NoSSRWrapper>
           <CanvasVideoTimeline/>
+          </NoSSRWrapper>
       </ResizablePanel>
     </ResizablePanelGroup>
 
