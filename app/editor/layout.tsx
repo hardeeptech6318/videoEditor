@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/drawer"
 import useVideoStore from "@/zustandStore/store";
 import CanvasVideoTimeline from "@/components/CanvasTimeline";
+import NoSSRWrapper from "@/components/NossrConversion";
 
 
 function Layout({ children }: { children: React.ReactNode }) {
@@ -56,6 +57,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       
           <VideoControls />
           {/* <Timeline  /> */}
+          <NoSSRWrapper></NoSSRWrapper>
           <CanvasVideoTimeline/>
       </ResizablePanel>
     </ResizablePanelGroup>
