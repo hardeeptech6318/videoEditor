@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./(components)/Navbar";
 import Maineditor from "./(components)/Maineditor";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Timeline from "@/components/VideoTimeline";
+// import Timeline from "@/components/VideoTimeline";
 import VideoControls from "@/components/VideoControls";
 import {
   ResizableHandle,
