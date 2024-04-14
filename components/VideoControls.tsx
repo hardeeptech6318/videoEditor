@@ -32,17 +32,26 @@ function VideoControls() {
       const handleTimeUpdate = () => {
         setCurrentTime(videoRef.current.currentTime);
       };
-      const handleDurationChange = () => {
-        setTotalDuration(videoRef.current.duration);
-      };
+      
+      
       videoRef.current.addEventListener('timeupdate', handleTimeUpdate);
-      videoRef.current.addEventListener('durationchange', handleDurationChange);
+      
       return () => {
         videoRef.current.removeEventListener('timeupdate', handleTimeUpdate);
-        videoRef.current.removeEventListener('durationchange', handleDurationChange);
+      
       };
     }
   }, [videoRef,isPlaying]);
+
+
+  useEffect(()=>{
+    if(videoRef?.current){
+      setTotalDuration(videoRef?.current?.duration);
+    }
+    
+  },[videoRef?.current])
+
+
   const handlePlayPause = () => {
     if (videoRef) {
       if (videoRef.current.paused) {
@@ -81,7 +90,7 @@ function VideoControls() {
             <Button className=' rounded-full' variant="ghost" onClick={handlePlayPause}>{!isPlaying ?<Play fill="#000000"/>:<PauseCircle/>}</Button> {/* change hanle play and puse based on is video playing or pause */}
             <Button className=' rounded-full' variant="ghost" onClick={handleFastForward}><FastForward width={20} height={20} fill="#000000"/></Button>
             
-            <div className='hidden lg:block'>{ formatDuration(currentTime) }/{formatDuration(videoRef?.current?.duration) }</div>
+            <div className='hidden lg:block'>{ formatDuration(currentTime) }/{formatDuration(totalDuration) }</div>
         </div>
 
         <div > 

@@ -63,8 +63,8 @@ function page() {
     <div className=' px-10 mt-4'>
       <div className=' flex items-center gap-3'>
         <span className=' text-muted-foreground'>Filetr by</span>
-        {filterByOption.map((e)=>(
-          <Button size="sm" variant="outline" className=' rounded-3xl'>{e.name}</Button>
+        {filterByOption.map((e,i)=>(
+          <Button key={i}  size="sm" variant="outline" className=' rounded-3xl'>{e.name}</Button>
         ))}
       </div>
     </div>
