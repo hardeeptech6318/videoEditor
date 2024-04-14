@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "./(components)/Navbar";
 import Maineditor from "./(components)/Maineditor";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -28,8 +28,10 @@ import NoSSRWrapper from "@/components/NossrConversion";
 
 
 function Layout({ children }: { children: React.ReactNode }) {
-  const open = useVideoStore((state:any) => state.opendrawer);
+  // const open = useVideoStore((state:any) => state.opendrawer);
   
+  
+
   
 
   return (
@@ -39,8 +41,8 @@ function Layout({ children }: { children: React.ReactNode }) {
       {children}
       </MobileNavbar>
       
-      <ResizablePanelGroup direction="vertical" >
-      <ResizablePanel className="  flex h-full" defaultValue={25}>
+      <ResizablePanelGroup autoSaveId="persistence" direction="vertical" >
+      <ResizablePanel  className="  flex h-full" defaultValue={75}>
       
           <ScrollArea className="  w-[400px] lg:block hidden h-full  p-5 border-r border-l shadow-sm ">
             {children}

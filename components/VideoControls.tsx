@@ -5,27 +5,21 @@ import { Button } from './ui/button'
 import { Download, FastForward, Pause, PauseCircle, Play, Rewind, Scissors, Settings, ZoomIn, ZoomOut } from 'lucide-react'
 import { Slider } from "@/components/ui/slider"
 import useVideoStore from '@/zustandStore/store';
+import { trimFunction } from '@/ffmpegFunctions/aspectRatio'
+import { formatDuration } from '@/lib/formatDuration'
 
-function formatDuration(durationInSeconds: number): string {
-  const hours = Math.floor(durationInSeconds / 3600);
-  const minutes = Math.floor((durationInSeconds % 3600) / 60);
-  const seconds = Math.floor(durationInSeconds % 60);
-  
-  const formattedHours = hours.toString().padStart(2, '0');
-  const formattedMinutes = minutes.toString().padStart(2, '0');
-  const formattedSeconds = seconds.toString().padStart(2, '0');
-  
-  return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-}
 
 
 function VideoControls() {
   
   const videoRef = useVideoStore((state:any) => state.videoRef);
+  const video = useVideoStore((state:any) => state.videoFile);
 
   const [isPlaying, setisPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
+  const trimRange = useVideoStore((state: any) => state.trimRange);
+  const videoFile = useVideoStore((state:any) => state.setVideoFile);
   
   useEffect(() => {
     if (videoRef?.current) {
@@ -42,6 +36,21 @@ function VideoControls() {
       };
     }
   }, [videoRef,isPlaying]);
+
+  useEffect(() => {
+    
+    
+    if (videoRef && videoRef.current && trimRange) {
+      // Check if trimRange has at least one value
+      if (trimRange.length > 0) {
+        // Set the current time of the video to the start of the trim range
+        
+        
+        videoRef.current.currentTime = trimRange[0];
+      }
+    }
+  }, [trimRange]);
+  
 
 
   useEffect(()=>{
@@ -76,6 +85,33 @@ function VideoControls() {
     }
   };
   
+  
+  const handleDownload = async () => {
+    const output = await trimFunction({ video: video, range: trimRange });
+  
+    videoFile(output)
+  
+    // Create a URL for the Blob
+    if(output){
+      const url = URL.createObjectURL(output);
+  
+      // Create an anchor element
+      const anchorElement = document.createElement('a');
+    
+      // Set href and download attributes
+      anchorElement.href = url;
+      anchorElement.download = 'trimmed_video.mp4';
+    
+      // Programmatically click the anchor element to trigger the download
+      anchorElement.click();
+    
+      // Clean up by revoking the URL
+      URL.revokeObjectURL(url);
+    }
+   
+  };
+  
+  
   return (
 
 
@@ -83,7 +119,7 @@ function VideoControls() {
     <div className=' flex  justify-between my-3 items-center'>
         <div className=' flex'>
             <Button className=' hidden lg:flex mr-2 text-xs' variant="ghost"><Scissors width={15} height={15} className=' mr-2'/><span> Split</span></Button>
-            <Button className=' text-xs' variant="ghost"><Download width={15} height={15} className=' mr-2'/> <span className='hidden lg:block mr-2'>Download section</span></Button>
+            <Button onClick={handleDownload} className=' text-xs' variant="ghost"><Download width={15} height={15} className=' mr-2'/> <span className='hidden lg:block mr-2'>Download section</span></Button>
         </div>
         <div className=' flex  items-center'>
             <Button className=' rounded-full' variant="ghost" onClick={handleRewind}><Rewind width={20} height={20} fill="#000000"/></Button>

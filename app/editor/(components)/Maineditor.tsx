@@ -16,17 +16,21 @@ function Maineditor({className}:{className:string}) {
     setVideoRef(playerRef);
     
   }, [playerRef, setVideoRef, videoFile]);
+
+ 
+
+
   return (
     <div className={cn("p-3 flex flex-col h-full",className)}>
       <EditorNavbar/>
-      <div className=" flex-1 flex justify-center items-center p-10 lg:p-20 h-full">
+      <div className=" flex-1  relative  h-full">
       {videoFile && (
-        <video controls ref={playerRef} >
+        <video   ref={playerRef} className=" absolute h-full w-full" >
           <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
         </video>
       )}
       </div>
-      <MainPopoverRatio />
+      <MainPopoverRatio className=" mt-2" />
 
     </div>
   )
