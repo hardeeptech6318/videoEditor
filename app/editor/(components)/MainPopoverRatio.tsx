@@ -24,7 +24,7 @@ import UploadComponent from "@/components/UploadComponent"
 
 import ColorPicker from "@/components/Colorpicker"
 import useVideoStore from "@/zustandStore/store"
-import { aspectRatio } from "@/ffmpegFunctions/aspectRatio"
+// import { aspectRatio } from "@/ffmpegFunctions/aspectRatio"
 
 
 const frameworks = [
